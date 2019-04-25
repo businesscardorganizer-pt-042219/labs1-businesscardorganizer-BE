@@ -16,6 +16,8 @@ exports.up = function(knex, Promise) {
     tbl.string('work_phone');
     tbl.string('URL');
     tbl.string('QR_code');
+    tbl.string('github');
+    tbl.string('linkedIn');
 	});
 };
 
