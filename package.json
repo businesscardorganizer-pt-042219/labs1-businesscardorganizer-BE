@@ -1,0 +1,36 @@
+{
+  "name": "labs1-businesscardorganizer-BE",
+  "version": "1.0.0",
+  "description": "businesscardorganizer",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js",
+    "test": "cross-env DB_ENV=testing jest --watch --verbose",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/businesscardorganizer-pt-042219/labs1-businesscardorganizer-BE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/businesscardorganizer-pt-042219/labs1-businesscardorganizer-BE/issues"
+  },
+  "homepage": "https://github.com/businesscardorganizer-pt-042219/labs1-businesscardorganizer-BE#readme",
+  "dependencies": {
+    "connect-session-knex": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "helmet": "^3.16.0",
+    "jest": "^24.7.1",
+    "knex": "^0.16.5",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
+}
