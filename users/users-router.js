@@ -1,9 +1,6 @@
 
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const db = require('../data/dbConfig.js');
 const Users = require('../users/users-model.js');
-const { jwtSecret } = require('../config/secret.js');
 
 const router = require('express').Router();
 
@@ -19,7 +16,7 @@ router.get('/', restricted, (req, res) => {
 });
 
 //GET user's own card
-router.get('/usersowncard/:id', (req, res) => {
+router.get('/usersowncard/:id', restricted, (req, res) => {
   const {id} = req.params
 
   db.select('cards.id')
@@ -37,7 +34,7 @@ router.get('/usersowncard/:id', (req, res) => {
 
 
 //GET user cards
-router.get('/userscards/:id', (req, res) => {
+router.get('/userscards/:id', restricted, (req, res) => {
   const {id} = req.params
 
   db.select('cards.id')
@@ -53,7 +50,7 @@ router.get('/userscards/:id', (req, res) => {
 })
 //GET endpoints
 //GET all
-router.get('/cards', (req, res) => { 
+router.get('/cards', restricted, (req, res) => { 
   db('cards').then( cards => {
       res.status(200).json(cards)
   })
@@ -61,7 +58,7 @@ router.get('/cards', (req, res) => {
   })
 })
 //GET by id
-router.get('/cards/:id', (req, res) => {
+router.get('/cards/:id', restricted, (req, res) => {
   const {id} = req.params
   db('cards').where({id}).then(content => {
       res.status(200).json(content)
@@ -70,28 +67,29 @@ router.get('/cards/:id', (req, res) => {
 })
 })
 //POST card
- router.post('/cards', (req, res) => { 
+ router.post('/cards', restricted, (req, res) => { 
     const body = req.body
     db('cards').insert(body).then(id => {
-        res.status(201).json(body)
+        res.status(201).json(id)
     })
     .catch( err => { res.status(400).json({err: "Unable to post card"})})
 })
 //DELETE Card
-router.delete('/cards/:id', (req, res) => {
+router.delete('/cards/:id', restricted, (req, res) => {
   const {id} = req.params
   db('cards').where({id}).del().then( ids => {
-      res.status(200).json({message: "the card has been deleted"})
+      res.status(200).json(ids)
+      
   })
   .catch( err => { res.status(400).json({ err: "Unable to delete the card"})
 })
 })
 //PUT card
-router.put('/cards/:id', (req, res) => {
+router.put('/cards/:id', restricted, (req, res) => {
   const {id} = req.params
   const body = req.body
 
-  return db('cards').where({id}).first().update('cards', body).then(content => {
+  return db('cards').where({id}).update('cards', body).then(content => {
         res.status(201).json(content)
     })   
     .catch(err => {res.status(400).json({err: "Unable to edit the card"})
