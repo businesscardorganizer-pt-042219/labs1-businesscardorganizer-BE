@@ -73,7 +73,7 @@ router.get('/cards/:id', (req, res) => {
  router.post('/cards', (req, res) => { 
     const body = req.body
     db('cards').insert(body).then(id => {
-        res.status(201).json(id)
+        res.status(201).json(body)
     })
     .catch( err => { res.status(400).json({err: "Unable to post card"})})
 })
@@ -81,7 +81,7 @@ router.get('/cards/:id', (req, res) => {
 router.delete('/cards/:id', (req, res) => {
   const {id} = req.params
   db('cards').where({id}).del().then( ids => {
-      res.status(200).json(ids)
+      res.status(200).json({message: "the card has been deleted"})
   })
   .catch( err => { res.status(400).json({ err: "Unable to delete the card"})
 })
