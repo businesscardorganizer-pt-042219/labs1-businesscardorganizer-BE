@@ -1,6 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+const { authenticate } = require('../auth/restricted-middleware.js');
 
 const authRouter = require('../auth/routes.js');
 const usersRouter = require('../users/users-router.js');
@@ -17,5 +18,6 @@ server.use('/api/users', usersRouter);
 server.get('/', (req, res) => {
   res.send("It's alive!");
 });
+
 
 module.exports = server;

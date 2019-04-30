@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
     tbl.string('first_name').notNullable();
     tbl.string('last_name').notNullable();
     tbl.string('work_title');
+    tbl.string('email')
     tbl.string('address1');
     tbl.string('address2');
     tbl.string('city');
