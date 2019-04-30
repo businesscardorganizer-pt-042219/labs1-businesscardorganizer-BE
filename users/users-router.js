@@ -1,7 +1,6 @@
 
 const db = require('../data/dbConfig.js');
 const Users = require('../users/users-model.js');
-
 const router = require('express').Router();
 
 
@@ -16,7 +15,7 @@ router.get('/', restricted, (req, res) => {
 });
 
 //GET user's own card
-router.get('/usersowncard/:id', restricted, (req, res) => {
+router.get('/mycard/:id', restricted, (req, res) => {
   const {id} = req.params
 
   db.select('cards.id')
@@ -34,7 +33,7 @@ router.get('/usersowncard/:id', restricted, (req, res) => {
 
 
 //GET user cards
-router.get('/userscards/:id', restricted, (req, res) => {
+router.get('/mycards/:id', restricted, (req, res) => {
   const {id} = req.params
 
   db.select('cards.id')
@@ -77,8 +76,8 @@ router.get('/cards/:id', restricted, (req, res) => {
 //DELETE Card
 router.delete('/cards/:id', restricted, (req, res) => {
   const {id} = req.params
-  db('cards').where({id}).del().then( ids => {
-      res.status(200).json(ids)
+  db('cards').where({id}).del().then( id => {
+      res.json({message:"The has been deleted"})
       
   })
   .catch( err => { res.status(400).json({ err: "Unable to delete the card"})
@@ -89,10 +88,14 @@ router.put('/cards/:id', restricted, (req, res) => {
   const {id} = req.params
   const body = req.body
 
+
+console.log('Body:', body);
   return db('cards').where({id}).update('cards', body).then(content => {
         res.status(201).json(content)
     })   
-    .catch(err => {res.status(400).json({err: "Unable to edit the card"})
+    .catch(err => {
+      console.error(err);
+      res.status(400).json({err: "Unable to edit the card"})
   })
 })
 
