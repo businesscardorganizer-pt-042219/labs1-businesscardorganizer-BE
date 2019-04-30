@@ -5,7 +5,8 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex('collections').insert([
         { user_id: '1', card_id: '1', event_id:'1'},
-      
+        { user_id: '1', card_id: '2', event_id:'1'},
+        { user_id: '1', card_id: '3', event_id:'1'},
       ]);
     });
 };

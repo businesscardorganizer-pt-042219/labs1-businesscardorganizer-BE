@@ -18,6 +18,7 @@ exports.up = function(knex, Promise) {
     tbl.string('QR_code');
     tbl.string('github');
     tbl.string('linkedIn');
+    tbl.string('own_flag');
 	});
 };
 
