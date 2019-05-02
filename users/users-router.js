@@ -35,7 +35,7 @@ router.get('/mycard/:id', restricted, (req, res) => {
 })
 
 
-//GET user cards
+//GET user cards /user.idmy
 router.get('/mycards/:id', restricted, (req, res) => {
   const {id} = req.params
 
@@ -93,7 +93,7 @@ router.put('/cards/:id', restricted, (req, res) => {
 
 
 console.log('Body:', body);
-  return db('cards').where({id}).update({initial: body.initial, first_name: body.first_name, last_name: body.last_name,work_title: body.work_title, email: body.email,address1: body.address1,address2: body.address2,city: body.city,state: body.state,zip: body.zip,country: body.country,company_name: body.company_name,cell_phone: body.cell_phone,work_phone: body.work_phone,URL: body.URL,QR_code: body.QR_code,github: body.github,linkedIn: body.linkedIn,own_flag: body.own_flag }).then(content => {
+  return db('cards').where({id}).update(body).then(content => {
         res.status(201).json(content)
     })   
     .catch(err => {
