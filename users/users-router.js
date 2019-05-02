@@ -14,6 +14,7 @@ router.get('/', restricted, (req, res) => {
     .catch(err => res.send(err));
 });
 
+
 //GET user's own card
 router.get('/mycard/:id', restricted, (req, res) => {
   const {id} = req.params
@@ -26,13 +27,15 @@ router.get('/mycard/:id', restricted, (req, res) => {
 .where('cards.own_flag', '1')
 .then(content => {
       res.status(200).json(content)
+  
+      
   })
   .catch(err => { res.status(400).json({ err: "This is not your card or you don't have one!"})
 })
 })
 
 
-//GET user cards
+//GET user cards /user.idmy
 router.get('/mycards/:id', restricted, (req, res) => {
   const {id} = req.params
 
@@ -90,7 +93,7 @@ router.put('/cards/:id', restricted, (req, res) => {
 
 
 console.log('Body:', body);
-  return db('cards').where({id}).update('cards', body).then(content => {
+  return db('cards').where({id}).update(body).then(content => {
         res.status(201).json(content)
     })   
     .catch(err => {
@@ -98,5 +101,22 @@ console.log('Body:', body);
       res.status(400).json({err: "Unable to edit the card"})
   })
 })
+//GET user cards by event id
+//events/id is event's id
+router.get('/events/:id', restricted, (req, res) => {
+  const {id} = req.params
 
+  db.select('cards.initial', 'cards.id', 'cards.first_name', 'cards.last_name','cards.work_title', 'cards.email','cards.address1','cards.address2','cards.city','cards.state','cards.zip','cards.country','cards.company_name','cards.cell_phone','cards.work_phone','cards.URL','cards.QR_code','cards.github','cards.linkedIn','cards.own_flag')
+.from('cards')
+.innerJoin('collections','collections.card_id','cards.id')
+.innerJoin('users','users.id','collections.user_id')
+.innerJoin('events','events.id','collections.event_id')
+.where('events.id', `${id}`)
+
+.then(content => {
+      res.status(200).json(content)
+  })
+  .catch(err => { res.status(400).json({ err: "There was an error locating the card"})
+})
+})
 module.exports = router;
