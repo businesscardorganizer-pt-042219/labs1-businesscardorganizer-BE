@@ -101,6 +101,30 @@ console.log('Body:', body);
       res.status(400).json({err: "Unable to edit the card"})
   })
 })
+
+
+
+//GET all
+router.get('/events', restricted, (req, res) => { 
+  db('events').then( event => {
+      res.status(200).json(event)
+  })
+  .catch( err => { res.status(400).json({err: "we've encountered an error"})
+  })
+})
+
+//POST post event
+
+router.post('/events', restricted, (req, res) => { 
+  const body = req.body
+  db('events').insert(body).then(id => {
+      res.status(201).json(id)
+  })
+  .catch( err => { res.status(400).json({err: "Unable to post event"})})
+})
+ 
+
+
 //GET user cards by event id
 //events/id is event's id
 router.get('/events/:id', restricted, (req, res) => {
@@ -119,4 +143,7 @@ router.get('/events/:id', restricted, (req, res) => {
   .catch(err => { res.status(400).json({ err: "There was an error locating the card"})
 })
 })
+
+
+
 module.exports = router;
