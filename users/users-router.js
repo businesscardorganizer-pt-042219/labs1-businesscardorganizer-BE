@@ -2,7 +2,7 @@
 const db = require('../data/dbConfig.js');
 const Users = require('../users/users-model.js');
 const router = require('express').Router();
-
+const route = require('../auth/routes.js')
 
 const restricted = require('../auth/restricted-middleware.js');
 
@@ -76,6 +76,11 @@ router.get('/cards/:id', restricted, (req, res) => {
     })
     .catch( err => { res.status(400).json({err: "Unable to post card"})})
 })
+
+
+
+
+
 //DELETE Card
 router.delete('/cards/:id', restricted, (req, res) => {
   const {id} = req.params
@@ -144,6 +149,19 @@ router.get('/events/:id', restricted, (req, res) => {
 })
 })
 
+
+//POST card to event
+router.post('/editcardtoevent/:id/:card_id/:event_id', restricted, (req, res) => { 
+
+  db('collections').insert({user_id: req.params.id, card_id: req.params.card_id, event_id: req.params.event_id}).then(id => {
+      res.status(201).json(id)
+    //  console.log(global.userz)
+  })
+  .catch( err => { res.status(400).json({err: "Unable to post card"})})
+})
+
+
+//collection
 
 
 module.exports = router;
