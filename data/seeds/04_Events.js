@@ -10,7 +10,8 @@ exports.seed = function(knex, Promise) {
          { event_name: 'IBM Conference',
          event_date: '1.9.2019'},
          { event_name: 'Oracle Conference',
-         event_date: '1.9.2019'}
+         event_date: '1.9.2019'},
+         
 
     
       ]);

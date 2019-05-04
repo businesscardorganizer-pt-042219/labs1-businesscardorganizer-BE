@@ -49,7 +49,21 @@ exports.seed = function(knex, Promise) {
          first_name: 'Frodo',
          last_name: 'Smith',
          work_title: 'Director'
-        }
+        },
+        {
+          initial: 'Miss',
+           first_name: 'Mary',
+           last_name: 'Marple',
+           work_title: 'Detective'
+          },
+          {
+            initial: 'Mr',
+             first_name: 'Sherlock',
+             last_name: 'Holmes',
+             work_title: 'Web Developer',
+             linkedIn: 'https://www.linkedin.com/in/sherlockh/'
+            },  
+
       ]);
     });
 };
