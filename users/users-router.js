@@ -48,7 +48,7 @@ router.get('/mycards', restricted, (req, res) => {
 })
 })
 //POST card
-router.post('/cards', restricted, (req, res) => { 
+router.post('/mycards', restricted, (req, res) => { 
 const body = req.body;
 db('cards')
 .insert(body)
@@ -65,7 +65,7 @@ db('cards')
 
 
 //DELETE Card
-router.delete('/cards/:id', restricted, (req, res) => {
+router.delete('/mycards/:id', restricted, (req, res) => {
   const {id} = req.params
   db('cards').where({id}).del().then( id => {
       res.json({message:"The has been deleted"})  
@@ -74,7 +74,7 @@ router.delete('/cards/:id', restricted, (req, res) => {
 })
 })
 //PUT card
-router.put('/cards/:id', restricted, (req, res) => {
+router.put('/mycards/:id', restricted, (req, res) => {
   const {id} = req.params
   const body = req.body
   return db('cards').where({id}).update(body).then(content => {
@@ -83,6 +83,15 @@ router.put('/cards/:id', restricted, (req, res) => {
     .catch(err => {
       res.status(400).json({err: "Unable to edit the card"})
   })
+})
+//GET by id
+router.get('/mycards/:id', restricted, (req, res) => {
+  const {id} = req.params
+  db('cards').where({id}).then(content => {
+      res.status(200).json(content)
+  })
+  .catch(err => { res.status(400).json({ err: "There was an error locating the card"})
+})
 })
 
 //GET all
@@ -156,14 +165,6 @@ router.get('/cards', restricted, (req, res) => {
   .catch( err => { res.status(400).json({err: "we've encountered an error"})
   })
 })
-//GET by id
-router.get('/cards/:id', restricted, (req, res) => {
-  const {id} = req.params
-  db('cards').where({id}).then(content => {
-      res.status(200).json(content)
-  })
-  .catch(err => { res.status(400).json({ err: "There was an error locating the card"})
-})
-})
+
 
 module.exports = router;
