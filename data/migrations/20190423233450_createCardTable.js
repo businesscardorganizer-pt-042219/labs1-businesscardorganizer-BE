@@ -20,6 +20,7 @@ exports.up = function(knex, Promise) {
     tbl.string('github');
     tbl.string('linkedIn');
     tbl.string('own_flag');
+    
 	});
 };
 

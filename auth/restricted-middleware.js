@@ -14,6 +14,8 @@ module.exports = (req, res, next) => {
     } else {
       console.log('token confirmed', decodedToken);
       req.decodedJwt = decodedToken;
+      req.username=decodedToken.username;
+      req.id=decodedToken.subject;
       next();
     }
   });
