@@ -17,9 +17,8 @@ router.get('/', restricted, (req, res) => {
 
 //GET user's own cards
 router.get('/mycard', restricted, (req, res) => {
-  const {id} = req.params
-  console.log(`${req.id}`)
-  db.select('cards.id')
+ 
+  db.select('cards.initial', 'cards.id', 'cards.first_name', 'cards.last_name','cards.work_title', 'cards.email','cards.address1','cards.address2','cards.city','cards.state','cards.zip','cards.country','cards.company_name','cards.cell_phone','cards.work_phone','cards.URL','cards.QR_code','cards.github','cards.linkedIn','cards.own_flag')
 .from('cards')
 .innerJoin('collections','collections.card_id','cards.id')
 .innerJoin('users','users.id','collections.user_id')
@@ -34,15 +33,15 @@ router.get('/mycard', restricted, (req, res) => {
 
 //GET all user's cards 
 router.get('/mycards', restricted, (req, res) => {
-  const {id} = req.params
-
-  db.select('cards.id')
+  //const {id} = req.params
+console.log(`${req.id}`);
+  db.select('cards.initial', 'cards.id', 'cards.first_name', 'cards.last_name','cards.work_title', 'cards.email','cards.address1','cards.address2','cards.city','cards.state','cards.zip','cards.country','cards.company_name','cards.cell_phone','cards.work_phone','cards.URL','cards.QR_code','cards.github','cards.linkedIn','cards.own_flag')
 .from('cards')
 .innerJoin('collections','collections.card_id','cards.id')
 .innerJoin('users','users.id','collections.user_id')
 .where('users.id', `${req.id}`)
-.then(content => {
-      res.status(200).json(content)
+.then(card => {
+      res.status(200).json(card)
   })
   .catch(err => { res.status(400).json({ err: "There was an error locating the card"})
 })
@@ -52,7 +51,7 @@ router.post('/mycards', restricted, (req, res) => {
 const body = req.body;
 db('cards')
 .insert(body)
-.returning('id')
+.returning(body)
 .then(function (response) {
   return db('collections')
     .insert({card_id: response[0], user_id: `${req.id}`})
